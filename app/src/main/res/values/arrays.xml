@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="whale_animations">
+        <item>@drawable/whale_0</item>
+        <item>@drawable/whale_1</item>
+    </string-array>
+    <string-array name="clouds">
+        <item>@drawable/cloud_0</item>
+        <item>@drawable/cloud_1</item>
+        <item>@drawable/cloud_2</item>
+        <item>@drawable/cloud_3</item>
+    </string-array>
+</resources>
