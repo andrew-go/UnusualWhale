@@ -3,7 +3,6 @@ package andrii.goncharenko.unusualwhale.Views;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
-import android.graphics.Point;
 import android.graphics.drawable.Drawable;
 
 import java.util.ArrayList;
@@ -24,9 +23,14 @@ public class Animation {
 
     private int arrayIndex;
 
-    public Animation(Context context, int arrayIndex, Point startPoint) {
+    private int oneImageRepeatCount;
+    private int repeatCounter;
+
+    public Animation(Context context, int arrayIndex, int oneImageRepeatCount) {
         this.context = context;
         this.arrayIndex = arrayIndex;
+        this.oneImageRepeatCount = oneImageRepeatCount;
+        repeatCounter = oneImageRepeatCount;
         initImages();
     }
 
@@ -44,7 +48,13 @@ public class Animation {
         image.setBounds(x, y, x + image.getMinimumWidth(), y + image.getMinimumHeight());
 
         image.draw(canvas);
-        currentFrame++;
+        repeatCounter--;
+        if (repeatCounter == 0) {
+            currentFrame++;
+            repeatCounter = oneImageRepeatCount;
+        }
     }
+
+
 
 }

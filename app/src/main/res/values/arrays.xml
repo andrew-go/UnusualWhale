@@ -4,10 +4,25 @@
         <item>@drawable/whale_0</item>
         <item>@drawable/whale_1</item>
     </string-array>
+    <string-array name="water_pillar_animations">
+        <item>@drawable/water_pillar_0</item>
+        <item>@drawable/water_pillar_1</item>
+        <item>@drawable/water_pillar_2</item>
+    </string-array>
     <string-array name="clouds">
         <item>@drawable/cloud_0</item>
         <item>@drawable/cloud_1</item>
         <item>@drawable/cloud_2</item>
         <item>@drawable/cloud_3</item>
+    </string-array>
+    <string-array name="water_level">
+        <item>@drawable/water_level_0</item>
+        <item>@drawable/water_level_1</item>
+        <item>@drawable/water_level_2</item>
+        <item>@drawable/water_level_3</item>
+        <item>@drawable/water_level_4</item>
+        <item>@drawable/water_level_5</item>
+        <item>@drawable/water_level_6</item>
+        <item>@drawable/water_level_7</item>
     </string-array>
 </resources>

@@ -27,12 +27,55 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/btSettings"
+            android:onClick="btSettingsClick"
             android:layout_margin="5dp"
             android:layout_gravity="center"
             android:background="@drawable/bt_settings_state"/>
 
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/btAbout"
+            android:onClick="btAboutClick"
+            android:layout_margin="5dp"
+            android:layout_gravity="center"
+            android:background="@drawable/bt_about_state"/>
+
     </LinearLayout>
 
+    <ImageView
+        android:id="@+id/ivScreenBlur"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        android:onClick="closeSettingsMenu"
+        android:background="@drawable/screen_blur"/>
 
+    <ImageView
+        android:id="@+id/ivSettings"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:layout_centerInParent="true"
+        android:background="@drawable/settings_window"/>
+
+    <ImageButton
+        android:id="@+id/btSound"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:layout_alignTop="@+id/ivSettings"
+        android:layout_alignLeft="@+id/ivSettings"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="50dp"
+        android:onClick="btSoundClick"
+        android:background="@drawable/sound_icon_on"/>
+
+    <ImageView
+        android:id="@+id/ivSplashScreen"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        android:background="@drawable/splash_screen"/>
 
 </RelativeLayout>

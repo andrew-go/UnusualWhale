@@ -8,4 +8,110 @@
         android:layout_height="match_parent"
         android:layout_width="match_parent" />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:layout_marginTop="4.5dp"
+        android:id="@+id/tvScore"
+        android:layout_marginLeft="240dp" />
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/btGameMenu"
+        android:onClick="btGameMenu"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="320dp"
+        android:layout_gravity="right|top"
+        android:background="@drawable/bt_game_settings_state"/>
+
+    <ImageView
+        android:id="@+id/ivScreenBlur"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        android:onClick="closeMenu"
+        android:background="@drawable/screen_blur"/>
+
+    <ImageView
+        android:id="@+id/ivMenu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:layout_centerInParent="true"
+        android:background="@drawable/menu_window"/>
+
+    <ImageButton
+        android:id="@+id/btRestart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:layout_alignTop="@+id/ivMenu"
+        android:layout_alignLeft="@+id/ivMenu"
+        android:layout_marginLeft="22dp"
+        android:layout_marginTop="62dp"
+        android:onClick="btRestart"
+        android:background="@drawable/restart_icon"/>
+
+    <ImageButton
+        android:id="@+id/btHome"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:layout_alignTop="@+id/ivMenu"
+        android:layout_alignLeft="@+id/ivMenu"
+        android:layout_marginLeft="88dp"
+        android:layout_marginTop="60dp"
+        android:onClick="btHome"
+        android:background="@drawable/home_icon"/>
+
+    <ImageButton
+        android:id="@+id/btSettings"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:layout_alignTop="@+id/ivMenu"
+        android:layout_alignLeft="@+id/ivMenu"
+        android:layout_marginLeft="164dp"
+        android:layout_marginTop="62dp"
+        android:onClick="btSettings"
+        android:background="@drawable/settings_icon"/>
+
+    <ImageView
+        android:id="@+id/ivSettings"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:layout_centerInParent="true"
+        android:background="@drawable/settings_window"/>
+
+    <ImageButton
+        android:id="@+id/btSound"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:layout_alignTop="@+id/ivSettings"
+        android:layout_alignLeft="@+id/ivSettings"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="50dp"
+        android:onClick="btSoundClick"
+        android:background="@drawable/sound_icon_on"/>
+
+    <ImageView
+        android:id="@+id/ivDamageScreen"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:layout_centerInParent="true"
+        android:background="@drawable/damage_screen"/>
+
+    <ImageView
+        android:id="@+id/ivWaterScreen"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:layout_centerInParent="true"
+        android:background="@drawable/water_screen"/>
+
 </RelativeLayout>

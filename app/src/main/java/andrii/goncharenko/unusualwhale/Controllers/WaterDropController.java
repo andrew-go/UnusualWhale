@@ -50,7 +50,7 @@ public class WaterDropController {
                         && waterDrop.getXPosition() < (WhaleController.Instance().getXPosition() + 228)
                         && waterDrop.getYPosition() > WhaleController.Instance().getYPosition()
                         && waterDrop.getYPosition() < (WhaleController.Instance().getYPosition() + 194)) {
-                    WhaleController.Instance().yPosition -= 25;
+                    WaterLevelController.Instance().waterLevel += 7;
                     item.remove();
                 }
             }

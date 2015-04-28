@@ -2,6 +2,8 @@ package andrii.goncharenko.unusualwhale.Threads;
 
 import android.view.View;
 
+import andrii.goncharenko.unusualwhale.Controllers.GameController;
+
 /**
  * Created by Andrey on 17.03.2015.
  */
@@ -32,6 +34,8 @@ public class DrawThread extends Thread {
 
     public void run() {
         while(run) {
+            if (GameController.Instance().gameStatus == GameStatusThread.eGameStatus.pause)
+                continue;
             try {
                 sleep(sleepDuration);
             } catch (InterruptedException e) {

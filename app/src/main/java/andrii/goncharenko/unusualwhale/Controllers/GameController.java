@@ -1,8 +1,13 @@
 package andrii.goncharenko.unusualwhale.Controllers;
 
+import android.os.Handler;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
+import andrii.goncharenko.unusualwhale.Activities.GameActivity;
+import andrii.goncharenko.unusualwhale.R;
 import andrii.goncharenko.unusualwhale.Threads.DrawThread;
 import andrii.goncharenko.unusualwhale.Threads.GameStatusThread;
 import andrii.goncharenko.unusualwhale.Views.GameView;
@@ -25,6 +30,12 @@ public class GameController {
     public GameStatusThread gameStatusThread;
 
     public GameStatusThread.eGameStatus gameStatus;
+
+    private int threadSlower = 50;
+
+    public int score = 0;
+
+    public GameActivity activity;
 
     public GameController() {
 
@@ -101,11 +112,72 @@ public class GameController {
         WaterDropController.Instance().clear();
         WhaleController.Instance().clear();
         JunkController.Instance().clear();
+        WaterLevelController.Instance().clear();
     }
 
     public void startNewGame() {
         gameStatus = GameStatusThread.eGameStatus.noAction;
         initThreads();
     }
+
+    final Handler mHandler = new Handler();
+
+    // Create runnable for posting
+    final Runnable mUpdateResults = new Runnable() {
+        public void run() {
+            riseScore();
+        }
+    };
+
+    public void riseScore() {
+        threadSlower--;
+        if (threadSlower == 0) {
+            score++;
+            TextView tvScore = (TextView) activity.findViewById(R.id.tvScore);
+            tvScore.setText(String.valueOf(score));
+            threadSlower = 50;
+        }
+    }
+
+    public void riseScoreOperation() {
+
+        Thread t = new Thread() {
+            public void run() {
+                mHandler.post(mUpdateResults);
+            }
+        };
+        t.start();
+    }
+
+    public void damageOperation() {
+
+        Thread t = new Thread() {
+            public void run() {
+                try {
+                    mHandler.post(mShowDamageScreen);
+                    sleep(200);
+                    mHandler.post(mHideDamageScreen);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        };
+        t.start();
+    }
+
+    final Runnable mShowDamageScreen = new Runnable() {
+        public void run() {
+            ImageView ivDamageScreen = (ImageView) activity.findViewById(R.id.ivDamageScreen);
+            ivDamageScreen.setVisibility(View.VISIBLE);
+        }
+    };
+
+    final Runnable mHideDamageScreen = new Runnable() {
+        public void run() {
+            ImageView ivDamageScreen = (ImageView) activity.findViewById(R.id.ivDamageScreen);
+            ivDamageScreen.setVisibility(View.GONE);
+        }
+    };
 
 }

@@ -4,6 +4,7 @@ import andrii.goncharenko.unusualwhale.Controllers.CloudController;
 import andrii.goncharenko.unusualwhale.Controllers.GameController;
 import andrii.goncharenko.unusualwhale.Controllers.JunkController;
 import andrii.goncharenko.unusualwhale.Controllers.WaterDropController;
+import andrii.goncharenko.unusualwhale.Controllers.WaterLevelController;
 import andrii.goncharenko.unusualwhale.Controllers.WhaleController;
 
 /**
@@ -17,12 +18,14 @@ public class GameStatusThread extends Thread {
         noAction,
         moving,
         stopMoving,
+        pause,
         gameOver
     };
 
     /**Members**/
 
     boolean run = true;
+
     int sleepDuration = 100;
 
     /**Constructors**/
@@ -45,12 +48,15 @@ public class GameStatusThread extends Thread {
         while(run) {
             try {
                 switch (GameController.Instance().gameStatus) {
+                    case pause:
+                        break;
                     case noAction:
                         checkOnGameOver();
                         deleteGameObjects();
                         createGameObjects();
                         sleep(sleepDuration);
                         lowerGameObjects();
+                        GameController.Instance().riseScoreOperation();
                         break;
                     case moving:
                         checkOnGameOver();
@@ -59,6 +65,7 @@ public class GameStatusThread extends Thread {
                         createGameObjects();
                         sleep(sleepDuration);
                         lowerGameObjects();
+                        GameController.Instance().riseScoreOperation();
                         break;
                     case gameOver:
                         gameOver();
@@ -85,7 +92,7 @@ public class GameStatusThread extends Thread {
     }
 
     private void lowerGameObjects() {
-        WhaleController.Instance().lowerWhale();
+        WaterLevelController.Instance().lowerWaterLevel();
         WaterDropController.Instance().lowerWaterDrops();
         CloudController.Instance().lowerClouds();
         JunkController.Instance().lowerJunkItems();

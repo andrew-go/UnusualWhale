@@ -56,7 +56,7 @@ public class BaseActivity  extends FragmentActivity {
     }
 
     public void stopMusic() {
-        if (backgroundMusic == null || !backgroundMusic.isPlaying() || !GameSettings.Instance().isMusicOn)
+        if (backgroundMusic == null || !backgroundMusic.isPlaying() || GameSettings.Instance().isMusicOn)
             return;
         backgroundMusic.stop();
     }
