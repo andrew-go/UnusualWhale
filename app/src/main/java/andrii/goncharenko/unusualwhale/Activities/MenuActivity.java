@@ -1,48 +1,116 @@
 package andrii.goncharenko.unusualwhale.Activities;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.media.MediaPlayer;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.view.View;
+import android.widget.ImageView;
 
 import andrii.goncharenko.unusualwhale.R;
+import andrii.goncharenko.unusualwhale.Settings.GameSettings;
 
 
 public class MenuActivity extends BaseActivity {
+
+    ImageView ivScreenBlur;
+    ImageView ivSettings;
+    ImageView ivSplashScreen;
+    ImageView btSound;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
-    }
-
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_menu, menu);
-        return true;
+        initComponents();
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
+    public void initComponents() {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        GameSettings.Instance().isMusicOn = prefs.getBoolean("music", false);
+        backgroundMusic = MediaPlayer.create(this, R.raw.music_1);
+        ivSplashScreen = (ImageView) findViewById(R.id.ivSplashScreen);
+        startLongRunningOperation();
+    }
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
+    @Override
+    protected void onResume() {
+        super.onResume();
     }
 
     public void btNewGameClick(View view) {
         Intent intent = new Intent(getBaseContext(), GameActivity.class);
         startActivity(intent);
+    }
+
+    public void btSettingsClick(View view) {
+        ivScreenBlur = (ImageView) findViewById(R.id.ivScreenBlur);
+        ivSettings = (ImageView) findViewById(R.id.ivSettings);
+
+        btSound = (ImageView) findViewById(R.id.btSound);
+        btSound.setBackground(GameSettings.Instance().isMusicOn
+                ? getDrawable(R.drawable.sound_icon_on)
+                : getDrawable(R.drawable.sound_icon_off));
+        ivScreenBlur.setVisibility(View.VISIBLE);
+        ivSettings.setVisibility(View.VISIBLE);
+        btSound.setVisibility(View.VISIBLE);
+    }
+
+    public void btAboutClick(View view) {
+
+    }
+
+    public void btSoundClick(View view) {
+        GameSettings.Instance().isMusicOn = !GameSettings.Instance().isMusicOn;
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        prefs.edit().putBoolean("music", GameSettings.Instance().isMusicOn).commit();
+        btSound.setBackground(GameSettings.Instance().isMusicOn
+                ? getDrawable(R.drawable.sound_icon_on)
+                : getDrawable(R.drawable.sound_icon_off));
+        if (GameSettings.Instance().isMusicOn)
+            startMusic();
+        else
+            stopMusic();
+    }
+
+    public void closeSettingsMenu(View view) {
+        ivScreenBlur.setVisibility(View.GONE);
+        ivSettings.setVisibility(View.GONE);
+        btSound.setVisibility(View.GONE);
+    }
+
+    final Handler mHandler = new Handler();
+
+    // Create runnable for posting
+    final Runnable showSplashScreen = new Runnable() {
+        public void run() {
+            ivSplashScreen.setVisibility(View.VISIBLE);
+        }
+    };
+
+    final Runnable hideSplashScreen = new Runnable() {
+        public void run() {
+            ivSplashScreen.setVisibility(View.GONE);
+        }
+    };
+
+    public void startLongRunningOperation() {
+
+        Thread t = new Thread() {
+            public void run() {
+                try {
+                    mHandler.post(showSplashScreen);
+                    sleep(3000);
+                    mHandler.post(hideSplashScreen);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        t.start();
     }
 
 }

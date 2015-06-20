@@ -3,7 +3,6 @@ package andrii.goncharenko.unusualwhale.Views;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
-import android.graphics.Point;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 
@@ -14,6 +13,7 @@ import andrii.goncharenko.unusualwhale.Controllers.CloudController;
 import andrii.goncharenko.unusualwhale.Controllers.GameController;
 import andrii.goncharenko.unusualwhale.Controllers.JunkController;
 import andrii.goncharenko.unusualwhale.Controllers.WaterDropController;
+import andrii.goncharenko.unusualwhale.Controllers.WaterLevelController;
 import andrii.goncharenko.unusualwhale.Controllers.WhaleController;
 import andrii.goncharenko.unusualwhale.R;
 import andrii.goncharenko.unusualwhale.Settings.DeviceSettings;
@@ -27,8 +27,12 @@ public class GameView extends BaseView {
     private Drawable waterDropImage;
     private Drawable gameOverImage;
     private Drawable junkImage;
+    private Drawable lifeImage;
+    private Drawable emptyLifeImage;
     private List<Drawable> cloudImages;
     private Animation whaleAnimation;
+    private Animation waterPillarAnimation;
+    private List<Drawable> waterLevelImages;
 
     public GameView(Context context) {
         super(context);
@@ -60,14 +64,24 @@ public class GameView extends BaseView {
                 drawBackGround(canvas);
                 drawClouds(canvas);
                 drawWaterDrops(canvas);
+                drawWaterPillarAnimation(canvas);
                 drawWhaleAnimation(canvas);
                 drawJunkItems(canvas);
+                drawLifeHearts(canvas);
+                drawWaterLevel(canvas);
         }
 
     }
 
     private void drawBackGround(Canvas canvas) {
         backgroundImage.draw(canvas);
+    }
+
+    private void drawWaterPillarAnimation(Canvas canvas) {
+        waterPillarAnimation.draw(
+                canvas,
+                WhaleController.Instance().getXPosition() + (225/2) + 26,
+                WhaleController.Instance().getYPosition() + 122);
     }
 
     private void drawWhaleAnimation(Canvas canvas) {
@@ -87,6 +101,14 @@ public class GameView extends BaseView {
 
     private void drawJunkItems(Canvas canvas) { //ArrayList in usage
         JunkController.Instance().drawJunkItems(canvas, junkImage);
+    }
+
+    private void drawLifeHearts(Canvas canvas) {
+        WhaleController.Instance().drawLifeHearts(canvas, lifeImage, emptyLifeImage);
+    }
+
+    private void drawWaterLevel(Canvas canvas) {
+        WaterLevelController.Instance().drawWaterLevel(canvas, waterLevelImages);
     }
 
     private void drawGameOver(Canvas canvas) {
@@ -113,14 +135,29 @@ public class GameView extends BaseView {
             gameOverImage.setBounds(0, 0, DeviceSettings.width, DeviceSettings.height);
         }
         if (junkImage == null) {
-            junkImage = context.getResources().getDrawable(R.drawable.junk_tv);
+            junkImage = context.getResources().getDrawable(R.drawable.junk_0);
         }
-
+        if (lifeImage == null) {
+            lifeImage = context.getResources().getDrawable(R.drawable.life);
+        }
+        if (emptyLifeImage == null) {
+            emptyLifeImage = context.getResources().getDrawable(R.drawable.empty_life);
+        }
+        if (waterLevelImages == null) {
+            TypedArray arr = context.getResources().obtainTypedArray(R.array.water_level);
+            waterLevelImages = new ArrayList<>();
+            for (int i = 0; i < arr.length(); i++)
+                waterLevelImages.add(context.getResources().getDrawable(arr.getResourceId(i, -1)));
+            arr.recycle();
+        }
     }
 
     private void initAnimations() {
         if (whaleAnimation == null) {
-            whaleAnimation = new Animation(context, R.array.whale_animations, new Point(100, 100));
+            whaleAnimation = new Animation(context, R.array.whale_animations, 0);
+        }
+        if (waterPillarAnimation == null) {
+            waterPillarAnimation = new Animation(context, R.array.water_pillar_animations, 5);
         }
     }
 

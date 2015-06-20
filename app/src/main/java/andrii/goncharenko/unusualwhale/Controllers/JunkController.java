@@ -49,7 +49,11 @@ public class JunkController {
                         && junk.getXPosition() + 100 < (WhaleController.Instance().getXPosition() + 228)
                         && junk.getYPosition() + 50 > WhaleController.Instance().getYPosition()
                         && junk.getYPosition() + 50 < (WhaleController.Instance().getYPosition() + 194)) {
-                    GameController.Instance().gameStatus = GameStatusThread.eGameStatus.gameOver;
+                    item.remove();
+                    GameController.Instance().damageOperation();
+                    if (WhaleController.Instance().heartsCount-- == 1) {
+                        GameController.Instance().gameStatus = GameStatusThread.eGameStatus.gameOver;
+                    }
                 }
             }
         }

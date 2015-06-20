@@ -1,5 +1,7 @@
 package andrii.goncharenko.unusualwhale.Controllers;
 
+import android.graphics.Canvas;
+import android.graphics.drawable.Drawable;
 import android.view.MotionEvent;
 
 import andrii.goncharenko.unusualwhale.Settings.DeviceSettings;
@@ -23,6 +25,8 @@ public class WhaleController {
         movingRight,
     };
 
+    public int heartsCount = 3;
+
     public eStatus moveWay = eStatus.noMove;
 
     int xPosition = (DeviceSettings.width / 2);
@@ -31,7 +35,7 @@ public class WhaleController {
         return xPosition;
     }
 
-    int yPosition = (DeviceSettings.height / 2);
+    int yPosition = (int)(DeviceSettings.height / 1.5);
 
     public int getYPosition() {
         return yPosition;
@@ -69,6 +73,19 @@ public class WhaleController {
 
     public void clear() {
         instance = null;
+    }
+
+    public void drawLifeHearts(Canvas canvas, Drawable lifeImage, Drawable emptyLifeImage) {
+        Drawable image;
+        for (int i = 0; i < 3; i++) {
+            image = (heartsCount > i) ? lifeImage : emptyLifeImage;
+            image.setBounds(
+                    (i * (image.getMinimumWidth()+10)),
+                    20,
+                    (i * (image.getMinimumWidth()+10)) + image.getMinimumWidth(),
+                    20 + image.getMinimumHeight());
+            image.draw(canvas);
+        }
     }
 
 }
