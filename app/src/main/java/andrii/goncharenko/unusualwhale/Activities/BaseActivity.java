@@ -1,7 +1,9 @@
 package andrii.goncharenko.unusualwhale.Activities;
 
+import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.view.WindowManager;
@@ -49,9 +51,16 @@ public class BaseActivity  extends FragmentActivity {
 
     }
 
+    public void changeMusicState() {
+        GameSettings.Instance().isMusicOn = !GameSettings.Instance().isMusicOn;
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        prefs.edit().putBoolean("music", GameSettings.Instance().isMusicOn).commit();
+    }
+
     public void startMusic() {
         if (backgroundMusic == null || backgroundMusic.isPlaying() || !GameSettings.Instance().isMusicOn)
             return;
+        backgroundMusic.reset();
         backgroundMusic.start();
     }
 

@@ -55,21 +55,15 @@ public class GameActivity extends BaseActivity {
 
     public void btGameMenu(View view) {
         GameController.Instance().gameStatus = GameStatusThread.eGameStatus.pause;
-        ivScreenBlur.setVisibility(View.VISIBLE);
-        ivMenu.setVisibility(View.VISIBLE);
-        btRestart.setVisibility(View.VISIBLE);
-        btHome.setVisibility(View.VISIBLE);
-        btSettings.setVisibility(View.VISIBLE);
+        GameSettingsDialog gameSettingsDialog = new GameSettingsDialog();
+        gameSettingsDialog.show(getFragmentManager(), "gameSettingsDialog");
     }
 
     public void btRestart(View view) {
         GameController.Instance().gameOver();
         GameController.Instance().startNewGame();
-        ivScreenBlur.setVisibility(View.GONE);
-        ivMenu.setVisibility(View.GONE);
-        btRestart.setVisibility(View.GONE);
-        btHome.setVisibility(View.GONE);
-        btSettings.setVisibility(View.GONE);
+        closeGameSettingsDialog();
+        onResume();
     }
 
     public void btHome(View view) {
@@ -78,43 +72,22 @@ public class GameActivity extends BaseActivity {
         startActivity(intent);
     }
 
-    public void btSettings(View view) {
-        ivSettings = (ImageView) findViewById(R.id.ivSettings);
-        btSound = (ImageView) findViewById(R.id.btSound);
-        btSound.setBackground(GameSettings.Instance().isMusicOn
-                ? getDrawable(R.drawable.sound_icon_on)
-                : getDrawable(R.drawable.sound_icon_off));
-        ivSettings.setVisibility(View.VISIBLE);
-        btSound.setVisibility(View.VISIBLE);
+    public void btSettingsMenu(View view) {
+        MenuSettingsDialog menuSettingsDialog = new MenuSettingsDialog();
+        menuSettingsDialog.show(getFragmentManager(), "menuSettingsDialog");
     }
 
     public void btSoundClick(View view) {
         GameSettings.Instance().isMusicOn = !GameSettings.Instance().isMusicOn;
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         prefs.edit().putBoolean("music", GameSettings.Instance().isMusicOn).commit();
-        btSound.setBackground(GameSettings.Instance().isMusicOn
+        view.setBackground(GameSettings.Instance().isMusicOn
                 ? getDrawable(R.drawable.sound_icon_on)
                 : getDrawable(R.drawable.sound_icon_off));
         if (GameSettings.Instance().isMusicOn)
             startMusic();
         else
             stopMusic();
-    }
-
-    public void closeMenu(View view) {
-        if (ivSettings != null && ivSettings.getVisibility() == View.VISIBLE) {
-            ivSettings.setVisibility(View.GONE);
-            btSound.setVisibility(View.GONE);
-        }
-        else {
-            ivScreenBlur.setVisibility(View.GONE);
-            ivMenu.setVisibility(View.GONE);
-            btRestart.setVisibility(View.GONE);
-            btHome.setVisibility(View.GONE);
-            btSettings.setVisibility(View.GONE);
-            GameController.Instance().gameStatus = GameStatusThread.eGameStatus.noAction;
-        }
-
     }
 
     public void initTextView() {
@@ -126,6 +99,10 @@ public class GameActivity extends BaseActivity {
         textView.setTextSize(30);
         textView.setShadowLayer(10, 7, 7, Color.BLACK);
         textView.setWidth(250);
+    }
+
+    private void closeGameSettingsDialog() {
+        ((GameSettingsDialog)getFragmentManager().findFragmentByTag("gameSettingsDialog")).dismiss();
     }
 
 }

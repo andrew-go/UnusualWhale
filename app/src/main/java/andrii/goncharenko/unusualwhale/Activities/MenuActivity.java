@@ -1,13 +1,18 @@
 package andrii.goncharenko.unusualwhale.Activities;
 
+import android.app.DialogFragment;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.PopupMenu;
+import android.widget.PopupMenu.OnMenuItemClickListener;
 
 import andrii.goncharenko.unusualwhale.R;
 import andrii.goncharenko.unusualwhale.Settings.GameSettings;
@@ -34,6 +39,21 @@ public class MenuActivity extends BaseActivity {
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        return super.onPrepareOptionsMenu(menu);
+    }
+
+    @Override
     protected void onResume() {
         super.onResume();
     }
@@ -44,16 +64,8 @@ public class MenuActivity extends BaseActivity {
     }
 
     public void btSettingsClick(View view) {
-        ivScreenBlur = (ImageView) findViewById(R.id.ivScreenBlur);
-        ivSettings = (ImageView) findViewById(R.id.ivSettings);
-
-        btSound = (ImageView) findViewById(R.id.btSound);
-        btSound.setBackground(GameSettings.Instance().isMusicOn
-                ? getDrawable(R.drawable.sound_icon_on)
-                : getDrawable(R.drawable.sound_icon_off));
-        ivScreenBlur.setVisibility(View.VISIBLE);
-        ivSettings.setVisibility(View.VISIBLE);
-        btSound.setVisibility(View.VISIBLE);
+        MenuSettingsDialog menuSettingsDialog = new MenuSettingsDialog();
+        menuSettingsDialog.show(getFragmentManager(), "menuSettingsDialog");
     }
 
     public void btAboutClick(View view) {
@@ -61,10 +73,8 @@ public class MenuActivity extends BaseActivity {
     }
 
     public void btSoundClick(View view) {
-        GameSettings.Instance().isMusicOn = !GameSettings.Instance().isMusicOn;
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        prefs.edit().putBoolean("music", GameSettings.Instance().isMusicOn).commit();
-        btSound.setBackground(GameSettings.Instance().isMusicOn
+        changeMusicState();
+        view.setBackground(GameSettings.Instance().isMusicOn
                 ? getDrawable(R.drawable.sound_icon_on)
                 : getDrawable(R.drawable.sound_icon_off));
         if (GameSettings.Instance().isMusicOn)
@@ -72,11 +82,4 @@ public class MenuActivity extends BaseActivity {
         else
             stopMusic();
     }
-
-    public void closeSettingsMenu(View view) {
-        ivScreenBlur.setVisibility(View.GONE);
-        ivSettings.setVisibility(View.GONE);
-        btSound.setVisibility(View.GONE);
-    }
-
 }
