@@ -16,9 +16,6 @@ import android.widget.ImageButton;
 import andrii.goncharenko.unusualwhale.R;
 import andrii.goncharenko.unusualwhale.Settings.GameSettings;
 
-/**
- * Created by Y50-70 on 20.06.2015.
- */
 public class MenuSettingsDialog extends DialogFragment {
 
     @Override

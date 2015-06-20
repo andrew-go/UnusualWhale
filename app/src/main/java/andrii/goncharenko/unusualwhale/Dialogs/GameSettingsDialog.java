@@ -8,9 +8,6 @@ import android.view.LayoutInflater;
 
 import andrii.goncharenko.unusualwhale.R;
 
-/**
- * Created by Y50-70 on 20.06.2015.
- */
 public class GameSettingsDialog extends DialogFragment {
 
     @Override
