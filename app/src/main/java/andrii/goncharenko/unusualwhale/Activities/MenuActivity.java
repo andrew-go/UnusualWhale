@@ -1,19 +1,16 @@
 package andrii.goncharenko.unusualwhale.Activities;
 
-import android.app.DialogFragment;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.os.Bundle;
-import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.PopupMenu;
-import android.widget.PopupMenu.OnMenuItemClickListener;
 
+import andrii.goncharenko.unusualwhale.Dialogs.MenuSettingsDialog;
 import andrii.goncharenko.unusualwhale.R;
 import andrii.goncharenko.unusualwhale.Settings.GameSettings;
 

@@ -8,6 +8,8 @@ import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.view.WindowManager;
 
+import java.io.IOException;
+
 import andrii.goncharenko.unusualwhale.R;
 import andrii.goncharenko.unusualwhale.Settings.GameSettings;
 
@@ -47,6 +49,12 @@ public class BaseActivity  extends FragmentActivity {
         stopMusic();
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        backgroundMusic.reset();
+    }
+
     public void initComponents() {
 
     }
@@ -60,14 +68,13 @@ public class BaseActivity  extends FragmentActivity {
     public void startMusic() {
         if (backgroundMusic == null || backgroundMusic.isPlaying() || !GameSettings.Instance().isMusicOn)
             return;
-        backgroundMusic.reset();
         backgroundMusic.start();
     }
 
     public void stopMusic() {
         if (backgroundMusic == null || !backgroundMusic.isPlaying() || GameSettings.Instance().isMusicOn)
             return;
-        backgroundMusic.stop();
+        backgroundMusic.pause();
     }
 
 }

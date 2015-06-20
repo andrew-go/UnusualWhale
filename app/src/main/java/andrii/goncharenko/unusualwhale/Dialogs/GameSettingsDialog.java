@@ -1,4 +1,4 @@
-package andrii.goncharenko.unusualwhale.Activities;
+package andrii.goncharenko.unusualwhale.Dialogs;
 
 import android.app.AlertDialog;
 import android.app.Dialog;

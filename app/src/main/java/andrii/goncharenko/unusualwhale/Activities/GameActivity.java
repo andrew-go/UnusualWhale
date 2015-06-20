@@ -12,6 +12,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import andrii.goncharenko.unusualwhale.Controllers.GameController;
+import andrii.goncharenko.unusualwhale.Dialogs.GameSettingsDialog;
+import andrii.goncharenko.unusualwhale.Dialogs.MenuSettingsDialog;
 import andrii.goncharenko.unusualwhale.R;
 import andrii.goncharenko.unusualwhale.Settings.GameSettings;
 import andrii.goncharenko.unusualwhale.Threads.GameStatusThread;
