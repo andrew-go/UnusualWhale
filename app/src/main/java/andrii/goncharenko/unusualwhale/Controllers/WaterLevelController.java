@@ -13,40 +13,48 @@ import andrii.goncharenko.unusualwhale.Threads.GameStatusThread;
  */
 public class WaterLevelController {
 
+    private final int WATER_LEVEL_1 = 100;
+    private final int WATER_LEVEL_2 = 200;
+    private final int WATER_LEVEL_3 = 300;
+    private final int WATER_LEVEL_4 = 400;
+    private final int WATER_LEVEL_5 = 500;
+    private final int WATER_LEVEL_6 = 600;
+    private final int WATER_LEVEL_7 = 700;
+
     private static WaterLevelController instance;
 
     public static WaterLevelController Instance() {
         return instance == null ? instance = new WaterLevelController() : instance;
     }
 
-    private int threadSlower = 5;
+    private int threadSlowerIndex = 5;
 
-    public int waterLevel = 600;
+    public int waterLevel = WATER_LEVEL_6;
 
     public void drawWaterLevel(Canvas canvas, List<Drawable> waterLevelItems) {
         Drawable image = waterLevelItems.get(0);
-        if (waterLevel < 100) {
+        if (waterLevel < WATER_LEVEL_1) {
             image = waterLevelItems.get(0);
         }
-        else if (waterLevel >= 100 && waterLevel < 200) {
+        else if (waterLevel >= WATER_LEVEL_1 && waterLevel < WATER_LEVEL_2) {
             image = waterLevelItems.get(1);
         }
-        else if (waterLevel >= 200 && waterLevel < 300) {
+        else if (waterLevel >= WATER_LEVEL_2 && waterLevel < WATER_LEVEL_3) {
             image = waterLevelItems.get(2);
         }
-        else if (waterLevel >= 300 && waterLevel < 400) {
+        else if (waterLevel >= WATER_LEVEL_3 && waterLevel < WATER_LEVEL_4) {
             image = waterLevelItems.get(3);
         }
-        else if (waterLevel >= 400 && waterLevel < 500) {
+        else if (waterLevel >= WATER_LEVEL_4 && waterLevel < WATER_LEVEL_5) {
             image = waterLevelItems.get(4);
         }
-        else if (waterLevel >= 500 && waterLevel < 600) {
+        else if (waterLevel >= WATER_LEVEL_5 && waterLevel < WATER_LEVEL_6) {
             image = waterLevelItems.get(5);
         }
-        else if (waterLevel >= 600 && waterLevel < 700) {
+        else if (waterLevel >= WATER_LEVEL_6 && waterLevel < WATER_LEVEL_7) {
             image = waterLevelItems.get(6);
         }
-        else if (waterLevel >= 700) {
+        else if (waterLevel >= WATER_LEVEL_7) {
             image = waterLevelItems.get(7);
         }
         image.setBounds(
@@ -58,12 +66,12 @@ public class WaterLevelController {
     }
 
     public void lowerWaterLevel() {
-        threadSlower --;
-        if (threadSlower == 0) {
+        threadSlowerIndex --;
+        if (threadSlowerIndex == 0) {
             waterLevel--;
             if (waterLevel == 0)
                 GameController.Instance().gameStatus = GameStatusThread.eGameStatus.gameOver;
-            threadSlower = 5;
+            threadSlowerIndex = 5;
         }
     }
 

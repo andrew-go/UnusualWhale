@@ -31,7 +31,7 @@ public class GameController {
 
     public GameStatusThread.eGameStatus gameStatus;
 
-    private int threadSlower = 50;
+    private int threadSlowerIndex = 50;
 
     public int score = 0;
 
@@ -47,12 +47,12 @@ public class GameController {
     }
 
     private void initDrawThread() {
-        drawThread = new DrawThread(view, 5);
+        drawThread = new DrawThread(view);
         drawThread.start();
     }
 
     private void initGameStatusThread() {
-        gameStatusThread = new GameStatusThread(10);
+        gameStatusThread = new GameStatusThread();
         gameStatusThread.start();
     }
 
@@ -122,7 +122,6 @@ public class GameController {
 
     final Handler mHandler = new Handler();
 
-    // Create runnable for posting
     final Runnable mUpdateResults = new Runnable() {
         public void run() {
             riseScore();
@@ -130,12 +129,12 @@ public class GameController {
     };
 
     public void riseScore() {
-        threadSlower--;
-        if (threadSlower == 0) {
+        threadSlowerIndex--;
+        if (threadSlowerIndex == 0) {
             score++;
             TextView tvScore = (TextView) activity.findViewById(R.id.tvScore);
             tvScore.setText(String.valueOf(score));
-            threadSlower = 50;
+            threadSlowerIndex = 50;
         }
     }
 
@@ -151,7 +150,7 @@ public class GameController {
 
     public void damageOperation() {
 
-        Thread t = new Thread() {
+        Thread thread = new Thread() {
             public void run() {
                 try {
                     mHandler.post(mShowDamageScreen);
@@ -163,7 +162,7 @@ public class GameController {
 
             }
         };
-        t.start();
+        thread.start();
     }
 
     final Runnable mShowDamageScreen = new Runnable() {

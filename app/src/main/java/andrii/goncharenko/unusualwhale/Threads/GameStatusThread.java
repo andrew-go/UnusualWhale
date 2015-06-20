@@ -26,16 +26,12 @@ public class GameStatusThread extends Thread {
 
     boolean run = true;
 
-    int sleepDuration = 100;
+    int sleepDuration = 10;
 
     /**Constructors**/
 
     public GameStatusThread() {
 
-    }
-
-    public GameStatusThread(int sleepDuration) {
-        this.sleepDuration = sleepDuration;
     }
 
     /** Public Methods **/
@@ -71,7 +67,6 @@ public class GameStatusThread extends Thread {
                         gameOver();
                         break;
                 }
-
 
             } catch (InterruptedException e) {
                 e.printStackTrace();

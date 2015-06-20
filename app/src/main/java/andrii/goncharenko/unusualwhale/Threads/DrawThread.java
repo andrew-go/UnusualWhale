@@ -13,17 +13,12 @@ public class DrawThread extends Thread {
 
     View view;
     boolean run = true;
-    int sleepDuration = 100;
+    int sleepDuration = 5;
 
     /** Constructors **/
 
     public DrawThread(View view) {
         this.view = view;
-    }
-
-    public DrawThread(View view, int sleepDuration) {
-        this.view = view;
-        this.sleepDuration = sleepDuration;
     }
 
     /** Public Methods **/

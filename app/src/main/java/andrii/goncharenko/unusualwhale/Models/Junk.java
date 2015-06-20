@@ -3,29 +3,17 @@ package andrii.goncharenko.unusualwhale.Models;
 /**
  * Created by Andrey on 19.03.2015.
  */
-public class Junk {
+public class Junk extends BaseObject {
 
-    public Junk(int xPosition, int speed) {
+    int speed = 10;
+
+    public Junk(int xPosition) {
         this.xPosition = xPosition;
         this.yPosition = 0;
-        this.speed = speed;
     }
 
-    int xPosition;
-
-    public int getXPosition() {
-        return xPosition;
-    }
-
-    int yPosition;
-
-    public int getYPosition() {
-        return yPosition;
-    }
-
-    int speed;
-
-    public void lower () {
+    @Override
+    public void lower() {
         yPosition += speed;
     }
 

@@ -12,6 +12,8 @@ import andrii.goncharenko.unusualwhale.Threads.GameStatusThread;
  */
 public class WhaleController {
 
+    private final int WHALE_STEP = 20;
+
     private static WhaleController instance;
 
     public static WhaleController Instance() {
@@ -52,18 +54,14 @@ public class WhaleController {
     public void move() {
         switch(moveWay) {
             case movingLeft:
-                if (xPosition >= 20)
-                    xPosition = xPosition - 20;
+                if (xPosition >= WHALE_STEP)
+                    xPosition = xPosition - WHALE_STEP;
             break;
             case movingRight:
-                if (xPosition <= (DeviceSettings.width - 236))
-                    xPosition = xPosition + 20;
+                if (xPosition <= (DeviceSettings.width - GameController.Instance().view.getWhaleImage().getMinimumWidth()))
+                    xPosition = xPosition + WHALE_STEP;
             break;
         }
-    }
-
-    public void lowerWhale() {
-        yPosition += 1;
     }
 
     public void checkWhaleHeight(){
@@ -75,14 +73,19 @@ public class WhaleController {
         instance = null;
     }
 
+    public void drawWhale(Canvas canvas, Drawable whaleImage) {
+        whaleImage.setBounds(xPosition, yPosition, xPosition + whaleImage.getMinimumWidth(), yPosition + whaleImage.getMinimumHeight());
+        whaleImage.draw(canvas);
+    }
+
     public void drawLifeHearts(Canvas canvas, Drawable lifeImage, Drawable emptyLifeImage) {
         Drawable image;
         for (int i = 0; i < 3; i++) {
             image = (heartsCount > i) ? lifeImage : emptyLifeImage;
             image.setBounds(
-                    (i * (image.getMinimumWidth()+10)),
+                    (i * (image.getMinimumWidth() + 10)),
                     20,
-                    (i * (image.getMinimumWidth()+10)) + image.getMinimumWidth(),
+                    (i * (image.getMinimumWidth() + 10)) + image.getMinimumWidth(),
                     20 + image.getMinimumHeight());
             image.draw(canvas);
         }

@@ -29,14 +29,21 @@ public class JunkController {
     public List<Junk> junkItems = Collections.synchronizedList(new ArrayList<Junk>());
 
     public void createJunkItems() {
-        for (int i = 0; i < 5; i++)
-            if (random.nextInt(1000) == 1)
-                junkItems.add(new Junk(random.nextInt(DeviceSettings.width), 10)) ;
+        if (isNewJunkChanceMatched())
+            junkItems.add(new Junk(getRandomHorizontalPosition())) ;
     }
 
     public void lowerJunkItems() {
         for (Junk junk : junkItems)
             junk.lower();
+    }
+
+    private int getCenterHorizontalPoint(Junk junk) {
+        return junk.getXPosition() + GameController.Instance().view.getJunkImage().getMinimumWidth()/2;
+    }
+
+    private int getCenterVerticalPoint(Junk junk) {
+        return junk.getYPosition() + GameController.Instance().view.getJunkImage().getMinimumHeight()/2;
     }
 
     public void deleteUnderJunkItems() {
@@ -45,13 +52,13 @@ public class JunkController {
                 Junk junk = item.next();
                 if (junk.getYPosition() > DeviceSettings.height)
                     item.remove();
-                else if (junk.getXPosition() + 100 > WhaleController.Instance().getXPosition()
-                        && junk.getXPosition() + 100 < (WhaleController.Instance().getXPosition() + 228)
-                        && junk.getYPosition() + 50 > WhaleController.Instance().getYPosition()
-                        && junk.getYPosition() + 50 < (WhaleController.Instance().getYPosition() + 194)) {
+                else if (getCenterHorizontalPoint(junk) > WhaleController.Instance().getXPosition()
+                        && getCenterHorizontalPoint(junk) < (WhaleController.Instance().getXPosition() + GameController.Instance().view.getWhaleImage().getMinimumWidth())
+                        && getCenterVerticalPoint(junk) > WhaleController.Instance().getYPosition()
+                        && getCenterVerticalPoint(junk) < (WhaleController.Instance().getYPosition() + GameController.Instance().view.getWhaleImage().getMinimumHeight())) {
                     item.remove();
                     GameController.Instance().damageOperation();
-                    if (WhaleController.Instance().heartsCount-- == 1) {
+                    if (--WhaleController.Instance().heartsCount == 0) {
                         GameController.Instance().gameStatus = GameStatusThread.eGameStatus.gameOver;
                     }
                 }
@@ -71,6 +78,14 @@ public class JunkController {
                 junkImage.draw(canvas);
             }
         }
+    }
+
+    private boolean isNewJunkChanceMatched() {
+        return random.nextInt(200) == 1;
+    }
+
+    private int getRandomHorizontalPosition() {
+        return random.nextInt(DeviceSettings.width);
     }
 
     public void clear() {

@@ -71,11 +71,4 @@
         android:onClick="btSoundClick"
         android:background="@drawable/sound_icon_on"/>
 
-    <ImageView
-        android:id="@+id/ivSplashScreen"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="gone"
-        android:background="@drawable/splash_screen"/>
-
 </RelativeLayout>

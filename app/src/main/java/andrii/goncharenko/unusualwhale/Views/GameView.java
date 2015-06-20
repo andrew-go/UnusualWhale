@@ -15,6 +15,7 @@ import andrii.goncharenko.unusualwhale.Controllers.JunkController;
 import andrii.goncharenko.unusualwhale.Controllers.WaterDropController;
 import andrii.goncharenko.unusualwhale.Controllers.WaterLevelController;
 import andrii.goncharenko.unusualwhale.Controllers.WhaleController;
+import andrii.goncharenko.unusualwhale.Helpers.AnimationHelper;
 import andrii.goncharenko.unusualwhale.R;
 import andrii.goncharenko.unusualwhale.Settings.DeviceSettings;
 
@@ -26,12 +27,22 @@ public class GameView extends BaseView {
     private Drawable backgroundImage;
     private Drawable waterDropImage;
     private Drawable gameOverImage;
+
+    public Drawable getJunkImage() {
+        return junkImage != null ? junkImage : (junkImage = context.getResources().getDrawable(R.drawable.junk_0));
+    }
+
     private Drawable junkImage;
     private Drawable lifeImage;
     private Drawable emptyLifeImage;
     private List<Drawable> cloudImages;
-    private Animation whaleAnimation;
-    private Animation waterPillarAnimation;
+
+    public Drawable getWhaleImage() {
+        return whaleImage != null ? whaleImage : (whaleImage = context.getResources().getDrawable(R.drawable.whale));
+    }
+
+    private Drawable whaleImage;
+    private AnimationHelper waterPillarAnimation;
     private List<Drawable> waterLevelImages;
 
     public GameView(Context context) {
@@ -65,7 +76,7 @@ public class GameView extends BaseView {
                 drawClouds(canvas);
                 drawWaterDrops(canvas);
                 drawWaterPillarAnimation(canvas);
-                drawWhaleAnimation(canvas);
+                drawWhale(canvas);
                 drawJunkItems(canvas);
                 drawLifeHearts(canvas);
                 drawWaterLevel(canvas);
@@ -80,15 +91,12 @@ public class GameView extends BaseView {
     private void drawWaterPillarAnimation(Canvas canvas) {
         waterPillarAnimation.draw(
                 canvas,
-                WhaleController.Instance().getXPosition() + (225/2) + 26,
-                WhaleController.Instance().getYPosition() + 122);
+                WhaleController.Instance().getXPosition() + GameController.Instance().view.getWhaleImage().getMinimumWidth()/2 + 26,
+                WhaleController.Instance().getYPosition() + GameController.Instance().view.getWhaleImage().getMinimumHeight());
     }
 
-    private void drawWhaleAnimation(Canvas canvas) {
-        whaleAnimation.draw(
-                canvas,
-                WhaleController.Instance().getXPosition(),
-                WhaleController.Instance().getYPosition());
+    private void drawWhale(Canvas canvas) {
+        WhaleController.Instance().drawWhale(canvas, whaleImage);
     }
 
     private void drawWaterDrops(Canvas canvas) { //ArrayList in usage
@@ -119,6 +127,9 @@ public class GameView extends BaseView {
         if (backgroundImage == null) {
             backgroundImage = context.getResources().getDrawable(R.drawable.game_background);
             backgroundImage.setBounds(0, 0, DeviceSettings.width, DeviceSettings.height);
+        }
+        if (whaleImage == null) {
+            whaleImage = context.getResources().getDrawable(R.drawable.whale);
         }
         if (waterDropImage == null) {
             waterDropImage = context.getResources().getDrawable(R.drawable.water_drop);
@@ -153,11 +164,8 @@ public class GameView extends BaseView {
     }
 
     private void initAnimations() {
-        if (whaleAnimation == null) {
-            whaleAnimation = new Animation(context, R.array.whale_animations, 0);
-        }
         if (waterPillarAnimation == null) {
-            waterPillarAnimation = new Animation(context, R.array.water_pillar_animations, 5);
+            waterPillarAnimation = new AnimationHelper(context, R.array.water_pillar_animations, 5);
         }
     }
 

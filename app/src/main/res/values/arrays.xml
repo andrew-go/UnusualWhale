@@ -1,9 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string-array name="whale_animations">
-        <item>@drawable/whale_0</item>
-        <item>@drawable/whale_q</item>
-    </string-array>
     <string-array name="water_pillar_animations">
         <item>@drawable/water_pillar_0</item>
         <item>@drawable/water_pillar_1</item>

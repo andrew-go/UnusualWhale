@@ -17,6 +17,8 @@ import andrii.goncharenko.unusualwhale.Settings.DeviceSettings;
  */
 public class CloudController {
 
+    private final int CLOUD_IMAGES_COUNT = 4;
+
     private static CloudController instance;
 
     public static CloudController Instance() {
@@ -28,9 +30,8 @@ public class CloudController {
     public List<Cloud> clouds = Collections.synchronizedList(new ArrayList<Cloud>());
 
     public void createClouds() {
-        for (int i = 0; i < 5; i++)
-            if (random.nextInt(250) == 1)
-                clouds.add(new Cloud(random.nextInt(DeviceSettings.width), random.nextInt(4))) ;
+        if (isNewCloudChanceMatched())
+            clouds.add(new Cloud(random.nextInt(DeviceSettings.width), getRandomCloudImageIndex()));
     }
 
     public void lowerClouds() {
@@ -48,8 +49,6 @@ public class CloudController {
         }
     }
 
-
-
     public void drawClouds(Canvas canvas, List<Drawable> cloudImages) {
         synchronized (clouds) {
             for (Iterator<Cloud> item = clouds.listIterator(); item.hasNext(); ) {
@@ -62,6 +61,14 @@ public class CloudController {
                 cloudImages.get(cloud.imageIndex).draw(canvas);
             }
         }
+    }
+
+    private boolean isNewCloudChanceMatched() {
+        return random.nextInt(50) == 1;
+    }
+
+    private int getRandomCloudImageIndex() {
+        return random.nextInt(CLOUD_IMAGES_COUNT);
     }
 
     public void clear() {

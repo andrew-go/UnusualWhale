@@ -1,4 +1,4 @@
-package andrii.goncharenko.unusualwhale.Views;
+package andrii.goncharenko.unusualwhale.Helpers;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -11,7 +11,9 @@ import java.util.List;
 /**
  * Created by Andrey on 17.03.2015.
  */
-public class Animation {
+public class AnimationHelper {
+
+    private final int START_IMAGE_INDEX = 0;
 
     private Context context;
 
@@ -19,14 +21,25 @@ public class Animation {
 
     private List<Drawable> images = new ArrayList<Drawable>();
 
-    private int currentFrame = 0;
+    private int currentFrame = START_IMAGE_INDEX;
 
     private int arrayIndex;
 
     private int oneImageRepeatCount;
     private int repeatCounter;
 
-    public Animation(Context context, int arrayIndex, int oneImageRepeatCount) {
+    private int height;
+    private int width;
+
+    public int getHeight() {
+        return height;
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public AnimationHelper(Context context, int arrayIndex, int oneImageRepeatCount) {
         this.context = context;
         this.arrayIndex = arrayIndex;
         this.oneImageRepeatCount = oneImageRepeatCount;
@@ -38,12 +51,14 @@ public class Animation {
         TypedArray arr = context.getResources().obtainTypedArray(arrayIndex);
         for (int i = 0; i < arr.length(); i++)
             images.add(context.getResources().getDrawable(arr.getResourceId(i, -1)));
+        if (images.size() > 0)
+            setAnimationSize();
         arr.recycle();
     }
 
     public void draw(Canvas canvas, int x, int y) {
         if (currentFrame == images.size())
-            currentFrame = 0;
+            currentFrame = START_IMAGE_INDEX;
         image = images.get(currentFrame);
         image.setBounds(x, y, x + image.getMinimumWidth(), y + image.getMinimumHeight());
 
@@ -55,6 +70,9 @@ public class Animation {
         }
     }
 
-
+    private void setAnimationSize() {
+        width = images.get(START_IMAGE_INDEX).getMinimumWidth();
+        height = images.get(START_IMAGE_INDEX).getMinimumHeight();
+    }
 
 }

@@ -17,6 +17,8 @@ import andrii.goncharenko.unusualwhale.Settings.DeviceSettings;
  */
 public class WaterDropController {
 
+    private final int WATER_LEVEL_INCREMENT = 7;
+
     private static WaterDropController instance;
 
     public static WaterDropController Instance() {
@@ -27,12 +29,9 @@ public class WaterDropController {
 
     public List<WaterDrop> waterDrops = Collections.synchronizedList(new ArrayList<WaterDrop>());
 
-    private Iterator<WaterDrop> iterator;
-
     public void createWaterDrops() {
-        for (int i = 0; i < 5; i++)
-            if (random.nextInt(100) == 1)
-                waterDrops.add(new WaterDrop(random.nextInt(DeviceSettings.width), random.nextInt(10) + 10)) ;
+        if (isNewDropChanceMatched())
+            waterDrops.add(new WaterDrop(random.nextInt(DeviceSettings.width), getRandomDropSpeed()));
     }
 
     public void lowerWaterDrops() {
@@ -47,10 +46,10 @@ public class WaterDropController {
                 if (waterDrop.getYPosition() > DeviceSettings.height)
                     item.remove();
                 else if (waterDrop.getXPosition() > WhaleController.Instance().getXPosition()
-                        && waterDrop.getXPosition() < (WhaleController.Instance().getXPosition() + 228)
+                        && waterDrop.getXPosition() < (WhaleController.Instance().getXPosition() + GameController.Instance().view.getWhaleImage().getMinimumWidth())
                         && waterDrop.getYPosition() > WhaleController.Instance().getYPosition()
-                        && waterDrop.getYPosition() < (WhaleController.Instance().getYPosition() + 194)) {
-                    WaterLevelController.Instance().waterLevel += 7;
+                        && waterDrop.getYPosition() < (WhaleController.Instance().getYPosition() + GameController.Instance().view.getWhaleImage().getMinimumHeight())) {
+                    WaterLevelController.Instance().waterLevel += WATER_LEVEL_INCREMENT;
                     item.remove();
                 }
             }
@@ -69,6 +68,14 @@ public class WaterDropController {
                 waterDropImage.draw(canvas);
             }
         }
+    }
+
+    private boolean isNewDropChanceMatched() {
+        return random.nextInt(20) == 1;
+    }
+
+    private int getRandomDropSpeed() {
+        return random.nextInt(10) + 10;
     }
 
     public void clear() {

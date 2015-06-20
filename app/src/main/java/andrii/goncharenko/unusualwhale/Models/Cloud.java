@@ -3,7 +3,7 @@ package andrii.goncharenko.unusualwhale.Models;
 /**
  * Created by Andrey on 18.03.2015.
  */
-public class Cloud {
+public class Cloud extends BaseObject {
 
     public int imageIndex;
 
@@ -13,20 +13,8 @@ public class Cloud {
         this.imageIndex = imageIndex;
     }
 
-    int xPosition;
-
-    public int getXPosition() {
-        return xPosition;
-    }
-
-    int yPosition;
-
-    public int getYPosition() {
-        return yPosition;
-    }
-
-    public void lower () {
+    @Override
+    public void lower() {
         yPosition += ((imageIndex + 1) * 2);
     }
-
 }
