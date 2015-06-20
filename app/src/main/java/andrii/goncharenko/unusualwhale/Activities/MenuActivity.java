@@ -70,13 +70,6 @@ public class MenuActivity extends BaseActivity {
     }
 
     public void btSoundClick(View view) {
-        changeMusicState();
-        view.setBackground(GameSettings.Instance().isMusicOn
-                ? getDrawable(R.drawable.sound_icon_on)
-                : getDrawable(R.drawable.sound_icon_off));
-        if (GameSettings.Instance().isMusicOn)
-            startMusic();
-        else
-            stopMusic();
+        changeMusicState(view);
     }
 }

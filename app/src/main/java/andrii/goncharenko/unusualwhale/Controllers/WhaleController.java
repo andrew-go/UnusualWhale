@@ -12,6 +12,7 @@ import andrii.goncharenko.unusualwhale.Threads.GameStatusThread;
  */
 public class WhaleController {
 
+    private final int HEART_MAX_COUNT = 3;
     private final int WHALE_STEP = 20;
 
     private static WhaleController instance;
@@ -80,7 +81,7 @@ public class WhaleController {
 
     public void drawLifeHearts(Canvas canvas, Drawable lifeImage, Drawable emptyLifeImage) {
         Drawable image;
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < HEART_MAX_COUNT; i++) {
             image = (heartsCount > i) ? lifeImage : emptyLifeImage;
             image.setBounds(
                     (i * (image.getMinimumWidth() + 10)),

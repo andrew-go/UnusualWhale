@@ -15,21 +15,21 @@
             android:background="@drawable/home_icon"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
-            android:onClick="btHome"/>
+            android:onClick="btHomeClick"/>
         <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/restart_icon"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
-            android:onClick="btRestart"/>
+            android:onClick="btRestartClick"/>
         <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/settings_icon"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
-            android:onClick="btSettingsMenu"/>
+            android:onClick="btMenuSettingsClick"/>
     </LinearLayout>
 
 </RelativeLayout>

@@ -22,13 +22,7 @@ import andrii.goncharenko.unusualwhale.Views.GameView;
 
 public class GameActivity extends BaseActivity {
 
-    ImageView ivScreenBlur;
-    ImageView ivMenu;
-    ImageView btRestart;
-    ImageView btHome;
     ImageView btSettings;
-    ImageView ivSettings;
-    ImageView btSound;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,10 +38,6 @@ public class GameActivity extends BaseActivity {
         GameController.Instance().initTouchListener();
         GameController.Instance().startNewGame();
 
-        ivScreenBlur = (ImageView) findViewById(R.id.ivScreenBlur);
-        ivMenu = (ImageView) findViewById(R.id.ivMenu);
-        btRestart = (ImageView) findViewById(R.id.btRestart);
-        btHome = (ImageView) findViewById(R.id.btHome);
         btSettings = (ImageView) findViewById(R.id.btSettings);
 
         backgroundMusic = MediaPlayer.create(this, R.raw.music_2);
@@ -55,41 +45,32 @@ public class GameActivity extends BaseActivity {
         initTextView();
     }
 
-    public void btGameMenu(View view) {
+    public void btGameSettingsClick(View view) {
         GameController.Instance().gameStatus = GameStatusThread.eGameStatus.pause;
         GameSettingsDialog gameSettingsDialog = new GameSettingsDialog();
         gameSettingsDialog.show(getFragmentManager(), "gameSettingsDialog");
     }
 
-    public void btRestart(View view) {
+    public void btRestartClick(View view) {
         GameController.Instance().gameOver();
         GameController.Instance().startNewGame();
         closeGameSettingsDialog();
         onResume();
     }
 
-    public void btHome(View view) {
+    public void btHomeClick(View view) {
         GameController.Instance().gameOver();
         Intent intent = new Intent(getBaseContext(), MenuActivity.class);
         startActivity(intent);
     }
 
-    public void btSettingsMenu(View view) {
+    public void btMenuSettingsClick(View view) {
         MenuSettingsDialog menuSettingsDialog = new MenuSettingsDialog();
         menuSettingsDialog.show(getFragmentManager(), "menuSettingsDialog");
     }
 
     public void btSoundClick(View view) {
-        GameSettings.Instance().isMusicOn = !GameSettings.Instance().isMusicOn;
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        prefs.edit().putBoolean("music", GameSettings.Instance().isMusicOn).commit();
-        view.setBackground(GameSettings.Instance().isMusicOn
-                ? getDrawable(R.drawable.sound_icon_on)
-                : getDrawable(R.drawable.sound_icon_off));
-        if (GameSettings.Instance().isMusicOn)
-            startMusic();
-        else
-            stopMusic();
+        changeMusicState(view);
     }
 
     public void initTextView() {

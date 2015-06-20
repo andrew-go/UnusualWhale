@@ -59,10 +59,17 @@ public class BaseActivity  extends FragmentActivity {
 
     }
 
-    public void changeMusicState() {
+    public void changeMusicState(View view) {
         GameSettings.Instance().isMusicOn = !GameSettings.Instance().isMusicOn;
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         prefs.edit().putBoolean("music", GameSettings.Instance().isMusicOn).commit();
+        view.setBackground(GameSettings.Instance().isMusicOn
+                ? getDrawable(R.drawable.sound_icon_on)
+                : getDrawable(R.drawable.sound_icon_off));
+        if (GameSettings.Instance().isMusicOn)
+            startMusic();
+        else
+            stopMusic();
     }
 
     public void startMusic() {

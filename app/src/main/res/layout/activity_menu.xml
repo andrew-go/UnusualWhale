@@ -43,32 +43,4 @@
 
     </LinearLayout>
 
-    <ImageView
-        android:id="@+id/ivScreenBlur"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="gone"
-        android:onClick="closeSettingsMenu"
-        android:background="@drawable/screen_blur"/>
-
-    <ImageView
-        android:id="@+id/ivSettings"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-        android:layout_centerInParent="true"
-        android:background="@drawable/settings_window"/>
-
-    <ImageButton
-        android:id="@+id/btSound"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:visibility="gone"
-        android:layout_alignTop="@+id/ivSettings"
-        android:layout_alignLeft="@+id/ivSettings"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="50dp"
-        android:onClick="btSoundClick"
-        android:background="@drawable/sound_icon_on"/>
-
 </RelativeLayout>
