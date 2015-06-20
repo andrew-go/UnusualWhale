@@ -17,7 +17,6 @@ public class MenuActivity extends BaseActivity {
 
     ImageView ivScreenBlur;
     ImageView ivSettings;
-    ImageView ivSplashScreen;
     ImageView btSound;
 
     @Override
@@ -32,8 +31,6 @@ public class MenuActivity extends BaseActivity {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         GameSettings.Instance().isMusicOn = prefs.getBoolean("music", false);
         backgroundMusic = MediaPlayer.create(this, R.raw.music_1);
-        ivSplashScreen = (ImageView) findViewById(R.id.ivSplashScreen);
-        startLongRunningOperation();
     }
 
     @Override
@@ -80,37 +77,6 @@ public class MenuActivity extends BaseActivity {
         ivScreenBlur.setVisibility(View.GONE);
         ivSettings.setVisibility(View.GONE);
         btSound.setVisibility(View.GONE);
-    }
-
-    final Handler mHandler = new Handler();
-
-    // Create runnable for posting
-    final Runnable showSplashScreen = new Runnable() {
-        public void run() {
-            ivSplashScreen.setVisibility(View.VISIBLE);
-        }
-    };
-
-    final Runnable hideSplashScreen = new Runnable() {
-        public void run() {
-            ivSplashScreen.setVisibility(View.GONE);
-        }
-    };
-
-    public void startLongRunningOperation() {
-
-        Thread t = new Thread() {
-            public void run() {
-                try {
-                    mHandler.post(showSplashScreen);
-                    sleep(3000);
-                    mHandler.post(hideSplashScreen);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-        };
-        t.start();
     }
 
 }

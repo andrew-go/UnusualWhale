@@ -41,26 +41,20 @@ public class GameActivity extends BaseActivity {
         GameController.Instance().view = (GameView) findViewById(R.id.gameView);
         GameController.Instance().initTouchListener();
         GameController.Instance().startNewGame();
-        backgroundMusic = MediaPlayer.create(this, R.raw.music_2);
-        backgroundMusic.setLooping(true);
 
-        TextView tv = (TextView) findViewById(R.id.tvScore);
-        Typeface face = Typeface.createFromAsset(getAssets(),
-                "agency_fb.ttf");
-        tv.setTextColor(Color.parseColor("#FFFFCC"));
-        tv.setTypeface(face, Typeface.BOLD);
-        tv.setTextSize(30);
-        tv.setShadowLayer(10, 7, 7, Color.BLACK);
-        tv.setWidth(250);
-    }
-
-    public void btGameMenu(View view) {
-        GameController.Instance().gameStatus = GameStatusThread.eGameStatus.pause;
         ivScreenBlur = (ImageView) findViewById(R.id.ivScreenBlur);
         ivMenu = (ImageView) findViewById(R.id.ivMenu);
         btRestart = (ImageView) findViewById(R.id.btRestart);
         btHome = (ImageView) findViewById(R.id.btHome);
         btSettings = (ImageView) findViewById(R.id.btSettings);
+
+        backgroundMusic = MediaPlayer.create(this, R.raw.music_2);
+        backgroundMusic.setLooping(true);
+        initTextView();
+    }
+
+    public void btGameMenu(View view) {
+        GameController.Instance().gameStatus = GameStatusThread.eGameStatus.pause;
         ivScreenBlur.setVisibility(View.VISIBLE);
         ivMenu.setVisibility(View.VISIBLE);
         btRestart.setVisibility(View.VISIBLE);
@@ -91,7 +85,7 @@ public class GameActivity extends BaseActivity {
                 ? getDrawable(R.drawable.sound_icon_on)
                 : getDrawable(R.drawable.sound_icon_off));
         ivSettings.setVisibility(View.VISIBLE);
-        btSound.setVisibility(View.VISIBLE);//
+        btSound.setVisibility(View.VISIBLE);
     }
 
     public void btSoundClick(View view) {
@@ -121,6 +115,17 @@ public class GameActivity extends BaseActivity {
             GameController.Instance().gameStatus = GameStatusThread.eGameStatus.noAction;
         }
 
+    }
+
+    public void initTextView() {
+        TextView textView = (TextView) findViewById(R.id.tvScore);
+        Typeface face = Typeface.createFromAsset(getAssets(),
+                "agency_fb.ttf");
+        textView.setTextColor(Color.parseColor("#FFFFCC"));
+        textView.setTypeface(face, Typeface.BOLD);
+        textView.setTextSize(30);
+        textView.setShadowLayer(10, 7, 7, Color.BLACK);
+        textView.setWidth(250);
     }
 
 }
